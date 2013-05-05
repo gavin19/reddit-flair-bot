@@ -1,7 +1,7 @@
 reddit-flair-bot
 ================
 
-Simple Python RSS script for handling incoming PMs with a view to assigning flair based on their content.
+Simple Python script for handling incoming PMs with a view to assigning flair based on their content.
 
 Requires PRAW to run (and Python of course).
 
