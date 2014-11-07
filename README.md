@@ -9,7 +9,7 @@ As it stands, this is the current script used in /r/football to handle the near 
 
     'flair_shortcode' : 'flair_text'
     
-as seen in the list of teams (flair_list.py). The team name is the text injected into the flair, so it assigns both an image and text. A typical prefilled PM would might look like
+as seen in the list of teams (flair_list.py). The team name is the text injected into the flair, so it assigns both an image and text. A typical prefilled PM might look like
 
     http://www.reddit.com/message/compose/?to=RFootballBot&subject=crest&message=eng-fcman
 
