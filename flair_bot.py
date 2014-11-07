@@ -23,6 +23,9 @@ PASSWD = 'password'
 # PMs that are directed towards the flairs
 # and not just a general PM
 SUBJECT = 'crest'
+# TARGET_SUB is to be the name of the subreddit
+# without the leading /r/
+TARGET_SUB = 'example_subreddit'
 
 def main():
     print "Fired: " + strftime("%Y-%m-%d %H:%M:%S", gmtime())
@@ -37,7 +40,7 @@ def main():
             body = str(msg.body)
             print "Author: " + auth
             print "Message content: " + body
-            sub = r.get_subreddit('football')
+            sub = r.get_subreddit(TARGET_SUB)
             if body in flairs:
                 ftext = str(flairs[body])
                 sub.set_flair(auth, ftext, body)
