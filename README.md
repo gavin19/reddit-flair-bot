@@ -17,7 +17,7 @@ where the subject is set to 'crest' (can be changed in the script) and the body 
 
 A (truncated) list of teams is included as an example of how your flair list should be structured. For example
 
-    flairs {
+    flairs = {
         'eng-fcman': 'FC United of Manchester',
         'eng-afctel': 'AFC Telford',
         'eng-chester': 'Chester F.C',
