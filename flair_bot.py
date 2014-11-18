@@ -2,6 +2,7 @@
 
 import praw
 import sys
+import os
 from time import gmtime, strftime
 try:
     from flair_list import flairs
@@ -45,6 +46,11 @@ class FlairBot:
     # Class variable to hold the unread pms
     pms = None
 
+    def init(self):
+        if self.LOGGING:
+            os.chdir(os.path.dirname(os.path.abspath(__file__)))
+        self.login()
+
     def login(self):
         """ Log in to the account being used for the bot """
         try:
@@ -79,7 +85,7 @@ class FlairBot:
             time_now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             log_text = 'Added: ' + author + ' : ' \
                         + flair_text + ' : ' \
-                        + content + ' @ ' + time_now
+                        + content + ' @ ' + time_now + '\n'
             logfile.write(log_text)
 
-FlairBot().login()
+FlairBot().init()
