@@ -25,6 +25,9 @@ class FlairBot:
     USER_NAME = 'some_user'
     PASSWD = 'some_password'
 
+    # Blacklist for users abusing the flair system
+    BLACKLIST = ['sampleuser', 'sampleUSER2']
+
     """ The SUBJECT will be the default subject of your PMs
     when you create the URLs, eg.
 
@@ -70,6 +73,8 @@ class FlairBot:
         for pm in self.pms:
             if str(pm.subject) == self.SUBJECT:
                 author = str(pm.author)  # Author of the PM
+                if author.lower() in (user.lower() for user in self.BLACKLIST):
+                    continue
                 content = str(pm.body)  # Content of the PM
                 subreddit = self.r.get_subreddit(self.TARGET_SUB)
                 if content in flairs:
@@ -84,8 +89,8 @@ class FlairBot:
         with open('log.txt', 'a') as logfile:
             time_now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             log_text = 'Added: ' + author + ' : ' \
-                        + flair_text + ' : ' \
-                        + content + ' @ ' + time_now + '\n'
+                + flair_text + ' : ' \
+                + content + ' @ ' + time_now + '\n'
             logfile.write(log_text)
 
 FlairBot().init()
