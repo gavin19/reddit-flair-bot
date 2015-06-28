@@ -46,9 +46,10 @@ from the terminal/cmd or schedule it to run intermittenly with cron/task schedul
 #OAuth
 
 Starting August 2015 reddit will require all logins to be made through OAuth. In order to log in through OAuth you'll need to follow a few simple steps.
-The first time you run the script a browser will open and you'll have to log into the account and authorize the app, if you don't do this the script will not write any tokens and it simply won't work. Message /u/straigh$
+The first time you run the script a browser will open and you'll have to log into the account and authorize the app, if you don't do this the script will not write any tokens and it simply won't work. Message /u/straightouttasweden if you need help with this step.
 
 OAuth changes made by /u/straightouttasweden + /u/GoldenSights
+
 OAuth2Util.py + OAuth guide by /u/SmBe19 (https://github.com/SmBe19/praw-OAuth2Util)
 
 ## Reddit Config

@@ -30,13 +30,10 @@ class FlairBot:
 
     BLACKLIST = ['sampleuser', 'sampleUSER2']
 
-
     # Set a descriptive user agent to avoid getting banned. Do not use the word `bot' in your user agent.
     r = praw.Reddit(user_agent="Flair changer for /r/subreddithere")
 
     o = OAuth2Util.OAuth2Util(r)
-
-
 
     """ The SUBJECT will be the default subject of your PMs
     when you create the URLs, eg.
