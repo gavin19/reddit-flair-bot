@@ -28,11 +28,11 @@ OAUth2Util.py by /u/SmBe19 (https://github.com/SmBe19/praw-OAuth2Util)
 
 class FlairBot:
 
-    BLACKLIST = ['Raduev', 'PSU_159', 'drcarp', 'namgnaulek', "Anahuac", "fedayeen1", "amazinjoey", "basedcodreanu"]
+    BLACKLIST = ['sampleuser', 'sampleUSER2']
 
 
     # Set a descriptive user agent to avoid getting banned. Do not use the word `bot' in your user agent.
-    r = praw.Reddit(user_agent="/u/straightouttasweden\'s flair changer for /r/syriancivilwar")
+    r = praw.Reddit(user_agent="Flair changer for /r/subreddithere")
 
     o = OAuth2Util.OAuth2Util(r)
 
