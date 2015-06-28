@@ -51,7 +51,7 @@ class FlairBot:
     SUBJECT = 'flair'
 
     # TARGET_SUB is the name of the subreddit without the leading /r/
-    TARGET_SUB = 'syriancivilwar'
+    TARGET_SUB = 'yoursubreddithere'
 
     # Turn on output to log file in current directory - log.txt
     LOGGING = True
