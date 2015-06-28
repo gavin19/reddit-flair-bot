@@ -43,7 +43,9 @@ To run, execute
 
 from the terminal/cmd or schedule it to run intermittenly with cron/task scheduler.
 
-Note: If you're using cron to execute the script, you'll have to change line 44 in OAuth2Util.py and add the **full** path to the config files. Example: ```def __init__(self, reddit, oauthappinfo_configfile = "/path/to/oauthappinfo.txt", oauthconfig_configfile = "/path/to/oauthconfig.txt", oauthtoken_configfile = "/path/file/oauthtoken.txt", print_log=False)```
+Note: If you're using cron to execute the script, you'll have to change line 44 in OAuth2Util.py and add the **full** path to the config files. Example: 
+
+```def __init__(self, reddit, oauthappinfo_configfile = "/path/to/oauthappinfo.txt", oauthconfig_configfile = "/path/to/oauthconfig.txt", oauthtoken_configfile = "/path/file/oauthtoken.txt", print_log=False)```
 
 #OAuth
 
