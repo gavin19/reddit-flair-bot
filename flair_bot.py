@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-
 import praw
+import OAuth2Util
 import sys
 import os
 from time import gmtime, strftime
@@ -15,18 +15,28 @@ except SyntaxError as e:
     print(e)
     sys.exit()
 
+"""
+
+Starting August 2015 reddit will require all logins to be made through OAuth. In order to log in through OAuth you'll need to follow a few simple steps (see https://github.com/SmBe19/praw-OAuth2Util/blob/master/OAuth2Util/README.md#reddit-config)
+The first time you run the script a browser will open and you'll have to log into the account and authorize the app, if you don't do this the script will not write any tokens and it simply won't work. Message /u/straightouttasweden if you need help with this.
+
+OAuth changes made by /u/straightouttasweden + /u/GoldenSights
+OAUth2Util.py by /u/SmBe19 (https://github.com/SmBe19/praw-OAuth2Util)
+
+"""
+
 
 class FlairBot:
 
-    # User agent that PRAW uses to identify your bot to reddit
-    USER_AGENT = '/u/some_user for /r/some_subreddit'
+    BLACKLIST = ['Raduev', 'PSU_159', 'drcarp', 'namgnaulek', "Anahuac", "fedayeen1", "amazinjoey", "basedcodreanu"]
 
-    # User name/password of the account that the bot will run through
-    USER_NAME = 'some_user'
-    PASSWD = 'some_password'
 
-    # Blacklist for users abusing the flair system
-    BLACKLIST = ['sampleuser', 'sampleUSER2']
+    # Set a descriptive user agent to avoid getting banned. Do not use the word `bot' in your user agent.
+    r = praw.Reddit(user_agent="/u/straightouttasweden\'s flair changer for /r/syriancivilwar")
+
+    o = OAuth2Util.OAuth2Util(r)
+
+
 
     """ The SUBJECT will be the default subject of your PMs
     when you create the URLs, eg.
@@ -38,13 +48,10 @@ class FlairBot:
     SUBJECT = 'flair'
 
     # TARGET_SUB is the name of the subreddit without the leading /r/
-    TARGET_SUB = 'some_subreddit'
+    TARGET_SUB = 'syriancivilwar'
 
     # Turn on output to log file in current directory - log.txt
     LOGGING = True
-
-    # Class variable to hold the PRAW instance
-    r = None
 
     # Class variable to hold the unread pms
     pms = None
@@ -54,14 +61,14 @@ class FlairBot:
             os.chdir(os.path.dirname(os.path.abspath(__file__)))
         self.login()
 
+
     def login(self):
-        """ Log in to the account being used for the bot """
         try:
-            self.r = praw.Reddit(user_agent=self.USER_AGENT)
-            self.r.login(self.USER_NAME, self.PASSWD)
-            self.fetch_pms()
+           self.o.refresh() # Refresh the OAuth token, only valid for 1hr
+           self.fetch_pms()
         except:
             raise
+
 
     def fetch_pms(self):
         """ Get a listing of all unread PMs for the user account """
@@ -89,8 +96,8 @@ class FlairBot:
         with open('log.txt', 'a') as logfile:
             time_now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             log_text = 'Added: ' + author + ' : ' \
-                + flair_text + ' : ' \
-                + content + ' @ ' + time_now + '\n'
+                        + flair_text + ' : ' \
+                        + content + ' @ ' + time_now + '\n'
             logfile.write(log_text)
 
 FlairBot().init()
