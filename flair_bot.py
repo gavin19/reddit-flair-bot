@@ -23,9 +23,9 @@ In order to log in through OAuth you'll need to follow a few simple steps
 
 The first time you run the script a browser will open and you'll have to log into the account to authorize the app, 
 if you don't do this the script will not write any tokens and it simply won't work. Message 
-/u/straightouttasweden if you need help with this.
+/u/zzqw- if you need help with this.
 
-OAuth changes made by /u/straightouttasweden + /u/GoldenSights
+OAuth changes made by /u/zzqw- + /u/GoldenSights
 OAUth2Util.py by /u/SmBe19 (https://github.com/SmBe19/praw-OAuth2Util)
 
 """
