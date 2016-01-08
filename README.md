@@ -80,7 +80,7 @@ In order to use OAuth2, you have to create an App on Reddit (https://www.reddit.
 OAuth2Util uses one config file to store the information. Before you can use it, the first two must be filled out manually by you, the third one will automatically be filled out when you authorize the script. Your `oauth.txt` should contain these lines:
 	
 	# Config 
-	scope=identity,account,edit,flair,history,livemanage,modconfig,modflair,modlog,modothers,modposts,modself,modwiki,mysubreddits,privatemessages,read,report,save,submit,subscribe,vote,wikiedit,wikiread # These grant the bot to every scope, only use those you want it to access.
+	scope=identity,account,edit,flair,history,livemanage,modconfig,modflair,modlog,modothers,modposts,modself,modwiki,mysubreddits,privatemessages,read,report,save,submit,subscribe,vote,wikiedit,wikiread
 	refreshable=True
 
 	# Appinfo
