@@ -36,7 +36,8 @@ class FlairBot:
     # User blacklist
     BLACKLIST = ['sampleuser', 'sampleUSER2']
 
-    # Set a descriptive user agent to avoid getting banned. Do not use the word `bot' in your user agent.
+    # Set a descriptive user agent to avoid getting banned.
+    # Do not use the word `bot' in your user agent.
     r = praw.Reddit(user_agent="Flair changer for /r/subreddithere")
 
     o = OAuth2Util.OAuth2Util(r)
@@ -67,8 +68,8 @@ class FlairBot:
 
     def login(self):
         try:
-           self.o.refresh() # Refresh the OAuth token, only valid for 1hr
-           self.fetch_pms()
+            self.o.refresh()  # Refresh the OAuth token, only valid for 1hr
+            self.fetch_pms()
         except:
             raise
 
@@ -94,13 +95,14 @@ class FlairBot:
                     if self.LOGGING:
                         self.log(author, content, flair_text)
                 pm.mark_as_read()  # Mark processed PM as read
+        sys.exit()
 
     def log(self, author, content, flair_text):
         with open('log.txt', 'a') as logfile:
             time_now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             log_text = 'Added: ' + author + ' : ' \
-                        + flair_text + ' : ' \
-                        + content + ' @ ' + time_now + '\n'
+                + flair_text + ' : ' \
+                + content + ' @ ' + time_now + '\n'
             logfile.write(log_text)
 
 FlairBot().init()
