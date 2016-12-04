@@ -98,7 +98,7 @@ class FlairBot:
         sys.exit()
 
     def log(self, author, content, flair_text):
-        with open('log.txt', 'a') as logfile:
+        with open('log.txt', 'a', encoding='utf-8') as logfile:
             time_now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             log_text = 'Added: ' + author + ' : ' \
                 + flair_text + ' : ' \
