@@ -71,16 +71,16 @@ class FlairBot:
     def fetch_pms(self):
         """ Grab unread PMs. """
 
+        target_sub = self.conf.get('subreddit', 'name')
         subject = self.conf.get('subject', 'subject')
         for msg in self.reddit.inbox.unread():
             if msg.subject == subject:
-                self.process_pm(msg)
+                self.process_pm(msg, target_sub)
         sys.exit()
 
-    def process_pm(self, msg):
+    def process_pm(self, msg, target_sub):
         """ Process unread PM. """
 
-        target_sub = self.conf.get('subreddit', 'name')
         author = msg.author
         content = msg.body.split(',', 1)
         class_name = content[0]
