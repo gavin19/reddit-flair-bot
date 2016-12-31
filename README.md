@@ -49,7 +49,7 @@ The `auth_type` will be whichever app type you chose to use. Must be either `scr
 
 Applicable only if you're using a script-type app.
 
-The `username` and `password` of the account that you're going to use for the bot.
+The username and password of the account that you're going to use for the bot.
 
 ####[auth-webapp]
 
