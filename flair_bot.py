@@ -1,108 +1,114 @@
-#!/usr/bin/env python3
-import praw
-import OAuth2Util
+""" Flair bot. """
 import sys
 import os
+import csv
+from configparser import ConfigParser
 from time import gmtime, strftime
-try:
-    from flair_list import flairs
-except ImportError as e:
-    print("Flairs file can't be accessed\n")
-    print(e)
-    sys.exit()
-except SyntaxError as e:
-    print("There is a syntax error in the flair list\n")
-    print(e)
-    sys.exit()
-
-"""
-
-Starting August 2015 reddit will require all logins to be made through OAuth. 
-In order to log in through OAuth you'll need to follow a few simple steps 
-(see https://github.com/SmBe19/praw-OAuth2Util/blob/master/OAuth2Util/README.md#reddit-config)
-
-The first time you run the script a browser will open and you'll have to log into the account to authorize the app, 
-if you don't do this the script will not write any tokens and it simply won't work. Message 
-/u/zzqw- if you need help with this.
-
-OAuth changes made by /u/zzqw- + /u/GoldenSights
-OAUth2Util.py by /u/SmBe19 (https://github.com/SmBe19/praw-OAuth2Util)
-
-"""
-
+import praw
 
 class FlairBot:
+    """ Flair bot. """
 
-    # User blacklist
-    BLACKLIST = ['sampleuser', 'sampleUSER2']
-
-    # Set a descriptive user agent to avoid getting banned.
-    # Do not use the word `bot' in your user agent.
-    r = praw.Reddit(user_agent="Flair changer for /r/subreddithere")
-
-    o = OAuth2Util.OAuth2Util(r)
-
-    """ The SUBJECT will be the default subject of your PMs
-    when you create the URLs, eg.
-
-    reddit.com/message/compose/?to=some_user&subject=flair&message=some_message
-
-    PMs require a subject, but it's also a simple way of identifying
-    PMs that are directed towards the flairs and not just a general PM"""
-    SUBJECT = 'flair'
-
-    # TARGET_SUB is the name of the subreddit without the leading /r/
-    TARGET_SUB = 'yoursubreddithere'
-
-    # Turn on output to log file in current directory - log.txt
-    LOGGING = True
-
-    # Class variable to hold the unread pms
-    pms = None
+    subject = None
+    logging = True
+    conf = None
+    reddit = None
+    flairs = {}
 
     def init(self):
-        if self.LOGGING:
+        """ Read config file. """
+
+        self.conf = ConfigParser()
+        self.conf.read('conf.ini')
+
+        if self.conf.get('log', 'logging') == 'True':
             os.chdir(os.path.dirname(os.path.abspath(__file__)))
+            self.logging = True
+        else:
+            self.logging = False
+
         self.login()
 
-
     def login(self):
-        try:
-            self.o.refresh()  # Refresh the OAuth token, only valid for 1hr
-            self.fetch_pms()
-        except:
-            raise
+        """ Log in via script/web app. """
 
+        app_id = self.conf.get('app', 'app_id')
+        app_secret = self.conf.get('app', 'app_secret')
+        user_agent = self.conf.get('app', 'user_agent')
+
+        if self.conf.get('app', 'auth_type') == 'webapp':
+            token = self.conf.get('auth-webapp', 'token')
+            self.reddit = praw.Reddit(client_id=app_id,\
+                            client_secret=app_secret,\
+                            refresh_token=token,\
+                            user_agent=user_agent)
+        else:
+            username = self.conf.get('auth-script', 'username')
+            password = self.conf.get('auth-script', 'passwd')
+            self.reddit = praw.Reddit(client_id=app_id,\
+                            client_secret=app_secret,\
+                            username=username,\
+                            password=password,\
+                            user_agent=user_agent)
+
+        self.get_flairs()
+
+    def get_flairs(self):
+        """ Read flairs from CSV. """
+
+        with open('flair_list.csv') as csvf:
+            csvf = csv.reader(csvf)
+            flairs = {}
+            for row in csvf:
+                if len(row) == 2:
+                    flairs[row[0]] = row[1]
+                else:
+                    flairs[row[0]] = None
+
+        self.flairs = flairs
+        self.fetch_pms()
 
     def fetch_pms(self):
-        """ Get a listing of all unread PMs for the user account """
-        self.pms = self.r.get_unread(limit=None)
-        if self.pms is not None:
-            self.process_pms()
+        """ Grab unread PMs. """
 
-    def process_pms(self):
-        for pm in self.pms:
-            if str(pm.subject) == self.SUBJECT:
-                author = str(pm.author)  # Author of the PM
-                if author.lower() in (user.lower() for user in self.BLACKLIST):
-                    continue
-                content = str(pm.body)  # Content of the PM
-                subreddit = self.r.get_subreddit(self.TARGET_SUB)
-                if content in flairs:
-                    # Get the flair text that corresponds with the class name
-                    flair_text = str(flairs[content])
-                    subreddit.set_flair(author, flair_text, content)
-                    if self.LOGGING:
-                        self.log(author, content, flair_text)
-                pm.mark_as_read()  # Mark processed PM as read
+        subject = self.conf.get('subject', 'subject')
+        for msg in self.reddit.inbox.unread():
+            if msg.subject == subject:
+                self.process_pm(msg)
         sys.exit()
 
-    def log(self, author, content, flair_text):
+    def process_pm(self, msg):
+        """ Process unread PM. """
+
+        target_sub = self.conf.get('subreddit', 'name')
+        author = msg.author
+        content = msg.body.split(',', 1)
+        class_name = content[0]
+        subreddit = self.reddit.subreddit(target_sub)
+
+        if class_name in self.flairs:
+            if len(content) > 1:
+                flair_text = content[1].lstrip()[:64]
+            else:
+                flair_text = self.flairs[class_name] or ''
+
+            subreddit.flair.set(author, flair_text, class_name)
+            if self.logging:
+                self.log(author, flair_text, class_name)
+
+        msg.mark_read()
+
+    @staticmethod
+    def log(user, text, cls):
+        """ Log applied flairs to file. """
+
         with open('log.txt', 'a', encoding='utf-8') as logfile:
             time_now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-            log_text = 'Added: ' + author + ' : ' \
-                + flair_text + ' : ' \
-                + content + ' @ ' + time_now + '\n'
-            logfile.write(log_text)
+            log = 'user: ' + user
+            log += ' | class(es): ' + cls
+            if len(text):
+                log += ' | text: ' + text
+            log += ' @ ' + time_now + '\n'
+            logfile.write(log)
 
 FlairBot().init()
