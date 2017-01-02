@@ -83,7 +83,7 @@ class FlairBot:
 
         author = msg.author
         content = msg.body.split(',', 1)
-        class_name = content[0]
+        class_name = content[0].rstrip()
         subreddit = self.reddit.subreddit(target_sub)
 
         if class_name in self.flairs:
