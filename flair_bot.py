@@ -23,7 +23,6 @@ class FlairBot:
 
         if self.conf.get('log', 'logging') == 'True':
             os.chdir(os.path.dirname(os.path.abspath(__file__)))
-            self.logging = True
         else:
             self.logging = False
 
