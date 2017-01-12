@@ -15,11 +15,15 @@ class FlairBot:
     reddit = None
     flairs = {}
 
-    def init(self):
+    def __init__(self):
         """ Read config file. """
 
-        self.conf = ConfigParser()
-        self.conf.read('conf.ini')
+        conf = ConfigParser()
+
+        if os.path.exists('conf.ini'):
+            self.conf = conf.read('conf.ini')
+        else:
+            raise FileNotFoundError('The config file, conf.ini, was not found.')
 
         if self.conf.get('log', 'logging') == 'True':
             os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -110,4 +114,4 @@ class FlairBot:
             log += ' @ ' + time_now + '\n'
             logfile.write(log)
 
-FlairBot().init()
+FlairBot()
