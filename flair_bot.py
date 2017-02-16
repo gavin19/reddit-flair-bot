@@ -18,10 +18,10 @@ class FlairBot:
     def __init__(self):
         """ Read config file. """
 
-        conf = ConfigParser()
+        self.conf = ConfigParser()
 
         if os.path.exists('conf.ini'):
-            self.conf = conf.read('conf.ini')
+            self.conf.read('conf.ini')
         else:
             raise FileNotFoundError('The config file, conf.ini, was not found.')
 
