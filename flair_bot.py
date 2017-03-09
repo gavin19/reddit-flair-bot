@@ -84,7 +84,7 @@ class FlairBot:
     def process_pm(self, msg, target_sub):
         """ Process unread PM. """
 
-        author = msg.author
+        author = str(msg.author)
         content = msg.body.split(',', 1)
         class_name = content[0].rstrip()
         subreddit = self.reddit.subreddit(target_sub)
