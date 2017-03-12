@@ -6,6 +6,7 @@ from configparser import ConfigParser
 from time import gmtime, strftime
 import praw
 
+
 class FlairBot:
     """ Flair bot. """
 
@@ -23,7 +24,7 @@ class FlairBot:
         if os.path.exists('conf.ini'):
             self.conf.read('conf.ini')
         else:
-            raise FileNotFoundError('The config file, conf.ini, was not found.')
+            raise FileNotFoundError('Config file, conf.ini, was not found.')
 
         if self.conf.get('log', 'logging') == 'True':
             os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -41,18 +42,18 @@ class FlairBot:
 
         if self.conf.get('app', 'auth_type') == 'webapp':
             token = self.conf.get('auth-webapp', 'token')
-            self.reddit = praw.Reddit(client_id=app_id,\
-                            client_secret=app_secret,\
-                            refresh_token=token,\
-                            user_agent=user_agent)
+            self.reddit = praw.Reddit(client_id=app_id,
+                                      client_secret=app_secret,
+                                      refresh_token=token,
+                                      user_agent=user_agent)
         else:
             username = self.conf.get('auth-script', 'username')
             password = self.conf.get('auth-script', 'passwd')
-            self.reddit = praw.Reddit(client_id=app_id,\
-                            client_secret=app_secret,\
-                            username=username,\
-                            password=password,\
-                            user_agent=user_agent)
+            self.reddit = praw.Reddit(client_id=app_id,
+                                      client_secret=app_secret,
+                                      username=username,
+                                      password=password,
+                                      user_agent=user_agent)
 
         self.get_flairs()
 
