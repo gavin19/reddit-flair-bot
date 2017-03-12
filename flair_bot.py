@@ -1,11 +1,16 @@
 """ Flair bot. """
 import sys
 import os
-import io
 import csv
 from configparser import ConfigParser
 from time import gmtime, strftime
 import praw
+
+req_version = (2,6)
+cur_version = sys.version_info
+
+if (cur_version >= req_version) and (cur_version < (3,0)):
+    import io
 
 class FlairBot:
     """ Flair bot. """
