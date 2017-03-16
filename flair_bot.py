@@ -26,14 +26,13 @@ class FlairBot:
 
         self.conf = ConfigParser()
 
+        os.chdir(sys.path[0])
         if os.path.exists('conf.ini'):
             self.conf.read('conf.ini')
         else:
             raise FileNotFoundError('Config file, conf.ini, was not found.')
 
-        if self.conf.get('log', 'logging') == 'True':
-            os.chdir(os.path.dirname(os.path.abspath(__file__)))
-        else:
+        if self.conf.get('log', 'logging') == 'False':
             self.logging = False
 
         self.login()
