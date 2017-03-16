@@ -6,6 +6,11 @@ from configparser import ConfigParser
 from time import gmtime, strftime
 import praw
 
+req_version = (2,7)
+cur_version = sys.version_info
+
+if (cur_version >= req_version) and (cur_version < (3,0)):
+    import io
 
 class FlairBot:
     """ Flair bot. """
@@ -106,7 +111,7 @@ class FlairBot:
     def log(user, text, cls):
         """ Log applied flairs to file. """
 
-        with open('log.txt', 'a', encoding='utf-8') as logfile:
+        with io.open('log.txt', 'a', encoding='utf-8') as logfile:
             time_now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             log = 'user: ' + user
             log += ' | class(es): ' + cls
