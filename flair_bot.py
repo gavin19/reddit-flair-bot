@@ -3,9 +3,12 @@ import sys
 import os
 import codecs
 import csv
-from configparser import ConfigParser
 from time import gmtime, strftime
 import praw
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
 
 
 class FlairBot:
