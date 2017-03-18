@@ -6,7 +6,7 @@ Python script for handling PMs with a view to assigning flair (image or image/te
 Requirements
 ============
 
-Requires [Python3](https://www.python.org/download/releases/3.0/) and [PRAW](https://github.com/praw-dev/praw) to work.
+Requires [Python](https://www.python.org/downloads/) (2.7, and 3.3-3.6 supported) and [PRAW](https://github.com/praw-dev/praw) to work.
 
 It also requires you to [set up](https://github.com/reddit/reddit/wiki/OAuth2) either a script or web app so you can authorise the bot to read PMs, mark PMs as read, and apply flair to users. Whichever you choose, the credentials will need to be entered into the [conf.ini](https://github.com/gavin19/reddit-flair-bot/blob/master/conf.ini) file.
 
