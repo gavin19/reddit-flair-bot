@@ -1,4 +1,4 @@
-""" Flair bot. """
+"""Flair bot."""
 import sys
 import os
 import codecs
@@ -9,18 +9,14 @@ import praw
 
 
 class FlairBot:
-    """ Flair bot. """
-
-    subject = None
-    logging = True
-    conf = None
-    reddit = None
-    flairs = {}
+    """Flair bot."""
 
     def __init__(self):
-        """ Read config file. """
+        """Initial setup."""
 
         self.conf = ConfigParser()
+        self.flairs = {}
+        self.reddit = None
 
         os.chdir(sys.path[0])
         if os.path.exists('conf.ini'):
@@ -30,11 +26,13 @@ class FlairBot:
 
         if self.conf.get('log', 'logging') == 'False':
             self.logging = False
+        else:
+            self.logging = True
 
         self.login()
 
     def login(self):
-        """ Log in via script/web app. """
+        """Log in via script/web app."""
 
         app_id = self.conf.get('app', 'app_id')
         app_secret = self.conf.get('app', 'app_secret')
@@ -58,7 +56,7 @@ class FlairBot:
         self.get_flairs()
 
     def get_flairs(self):
-        """ Read flairs from CSV. """
+        """Read flairs from CSV."""
 
         with open('flair_list.csv') as csvf:
             csvf = csv.reader(csvf)
@@ -73,7 +71,7 @@ class FlairBot:
         self.fetch_pms()
 
     def fetch_pms(self):
-        """ Grab unread PMs. """
+        """Grab unread PMs."""
 
         target_sub = self.conf.get('subreddit', 'name')
         subject = self.conf.get('subject', 'subject')
@@ -83,7 +81,7 @@ class FlairBot:
         sys.exit()
 
     def process_pm(self, msg, target_sub):
-        """ Process unread PM. """
+        """Process unread PM."""
 
         author = str(msg.author)
         content = msg.body.split(',', 1)
@@ -104,7 +102,7 @@ class FlairBot:
 
     @staticmethod
     def log(user, text, cls):
-        """ Log applied flairs to file. """
+        """Log applied flairs to file."""
 
         with codecs.open('log.txt', 'a', 'utf-8') as logfile:
             time_now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
