@@ -1,6 +1,7 @@
 """Flair bot."""
 import sys
 import os
+import re
 import codecs
 import csv
 from time import gmtime, strftime
@@ -77,16 +78,18 @@ class FlairBot:
         """Grab unread PMs."""
 
         target_sub = self.conf.get('subreddit', 'name')
+        valid = r'[_a-zA-Z0-9]+'
         subject = self.conf.get('subject', 'subject')
         for msg in self.reddit.inbox.unread():
-            if msg.subject == subject:
-                self.process_pm(msg, target_sub)
+            author = str(msg.author)
+            valid_user = re.match(valid, author)
+            if msg.subject == subject and valid_user:
+                self.process_pm(msg, author, target_sub)
         sys.exit()
 
-    def process_pm(self, msg, target_sub):
+    def process_pm(self, msg, author, target_sub):
         """Process unread PM."""
 
-        author = str(msg.author)
         content = msg.body.split(',', 1)
         class_name = content[0].rstrip()
         subreddit = self.reddit.subreddit(target_sub)
