@@ -78,7 +78,7 @@ class FlairBot:
         """Grab unread PMs."""
 
         target_sub = self.conf.get('subreddit', 'name')
-        valid = r'[_a-zA-Z0-9]+'
+        valid = r'[A-Za-z0-9_-]+'
         subject = self.conf.get('subject', 'subject')
         for msg in self.reddit.inbox.unread():
             author = str(msg.author)
