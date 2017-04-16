@@ -33,7 +33,7 @@ https://www.reddit.com/message/compose/?to=the_bot_account&subject=flair&message
 
 The configuration file (`conf.ini`) has six sections.
 
-##### [app]
+#### [app]
 
 The `app_id` and `app_secret` values can be found after you've created your reddit script/web app.
 
@@ -41,27 +41,27 @@ The `user_agent` is what identifies the bot when connecting to reddit. Defaults 
 
 The `auth_type` will be whichever app type you chose to use. Must be either `script` (default) or `webapp`.
 
-##### [auth-script]
+#### [auth-script]
 
 Applicable only if you're using a script-type app.
 
 The username and password of the account that you're going to use for the bot.
 
-##### [auth-webapp]
+#### [auth-webapp]
 
 Applicable only if you're using a web-type app.
 
 The `token` value must be a valid refresh token. See [here](https://praw.readthedocs.io/en/latest/getting_started/authentication.html#web-application) to acquire the auth URL. Note, you require the `privatemessages` and `modflair` scopes. Once you've done that, go [here](https://praw.readthedocs.io/en/latest/getting_started/authentication.html#using-refresh-token) to find out how to get the token.
 
-##### [subreddit]
+#### [subreddit]
 
 The name of the subreddit you're targeting.
 
-##### [subject]
+#### [subject]
 
 The subject that you used in the PM links. This is so the bot can identify PMs that are intended for it rather than general PMs that the account may receive. Defaults to `flair`.
 
-##### [log]
+#### [log]
 
 If you want the bot to keep a record of applied flairs (with timestamp). Defaults to `True`. Change to `False` if you want to disable logging.
 
