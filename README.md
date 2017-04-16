@@ -1,17 +1,14 @@
-reddit-flair-bot
-================
+#reddit-flair-bot
 
-Python script for handling PMs with a view to assigning flair (image or image/text) based on their content. The main use case for this is for subreddits who want to allow their users to choose from more than 350 flairs (this is the current limit in subreddits).
+Python script for handling PMs with a view to assigning user flair (image or image/text) based on their content. The main use case for this is for subreddits who want to allow their users to choose from more than 350 flairs (this is the current limit for flair templates in subreddits).
 
-Requirements
-============
+#Requirements
 
 Requires [Python](https://www.python.org/downloads/) (2.7, and 3.3-3.6 supported) and [PRAW](https://github.com/praw-dev/praw) to work.
 
 It also requires you to [set up](https://github.com/reddit/reddit/wiki/OAuth2) either a script or web app so you can authorise the bot to read PMs, mark PMs as read, and apply flair to users. Whichever you choose, the credentials will need to be entered into the [conf.ini](https://github.com/gavin19/reddit-flair-bot/blob/master/conf.ini) file.
 
-Info
-====
+#Info
 
 As it stands, this is the current script used in /r/football to handle the ~700 possible flairs. The PMs originate from users via /r/FootballBot. You will need to make your own sub (or preferably a wiki page in your subreddit) and populate it with links that point to a preset PM. An example link for a PM would be
 
@@ -32,12 +29,11 @@ Unlike flairs that can be selected in the subreddit, the user can't edit/remove 
 
 https://www.reddit.com/message/compose/?to=the_bot_account&subject=flair&message=cat,custom%20text%20here
 
-Configuration
-=============
+#Configuration
 
 The configuration file (`conf.ini`) has six sections.
 
-####[app]
+#####[app]
 
 The `app_id` and `app_secret` values can be found after you've created your reddit script/web app.
 
@@ -45,32 +41,31 @@ The `user_agent` is what identifies the bot when connecting to reddit. Defaults 
 
 The `auth_type` will be whichever app type you chose to use. Must be either `script` (default) or `webapp`.
 
-####[auth-script]
+#####[auth-script]
 
 Applicable only if you're using a script-type app.
 
 The username and password of the account that you're going to use for the bot.
 
-####[auth-webapp]
+#####[auth-webapp]
 
 Applicable only if you're using a web-type app.
 
 The `token` value must be a valid refresh token. See [here](https://praw.readthedocs.io/en/latest/getting_started/authentication.html#web-application) to acquire the auth URL. Note, you require the `privatemessages` and `modflair` scopes. Once you've done that, go [here](https://praw.readthedocs.io/en/latest/getting_started/authentication.html#using-refresh-token) to find out how to get the token.
 
-####[subreddit]
+#####[subreddit]
 
 The name of the subreddit you're targeting.
 
-####[subject]
+#####[subject]
 
 The subject that you used in the PM links. This is so the bot can identify PMs that are intended for it rather than general PMs that the account may receive. Defaults to `flair`.
 
-####[log]
+#####[log]
 
 If you want the bot to keep a record of applied flairs (with timestamp). Defaults to `True`. Change to `False` if you want to disable logging.
 
-Finally
-=======
+#Finally
 
 Once everything is in place, to run, execute
 
