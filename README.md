@@ -72,3 +72,7 @@ Once everything is in place, to run, execute
     python3 flair_bot.py
 
 from a terminal/command prompt or schedule it to run intermittenly with cron/task scheduler.
+
+# Support
+
+PM [/u/gavin19](https://www.reddit.com/message/compose/?to=gavin19&subject=flair%20bot) on reddit.
