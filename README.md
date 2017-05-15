@@ -69,7 +69,7 @@ If you want the bot to keep a record of applied flairs (with timestamp). Default
 
 Once everything is in place, to run, execute
 
-    python3 flair_bot.py
+    python flair_bot.py
 
 from a terminal/command prompt or schedule it to run intermittenly with cron/task scheduler.
 
