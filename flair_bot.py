@@ -81,7 +81,7 @@ class FlairBot:
         valid = r'[A-Za-z0-9_-]+'
         subject = self.conf.get('subject', 'subject')
         for msg in self.reddit.inbox.unread():
-            if author is None:
+            if msg.author is None:
                 continue # Skip if the author is None
             author = str(msg.author)
             valid_user = re.match(valid, author)
