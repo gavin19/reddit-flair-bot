@@ -20,7 +20,7 @@ class FlairBot:
 
         self.conf = ConfigParser()
         self.flairs = {}
-        self.reddit = None
+        self.reddit = self.login()
 
         os.chdir(sys.path[0])
         if os.path.exists('conf.ini'):
@@ -33,7 +33,7 @@ class FlairBot:
         else:
             self.logging = True
 
-        self.login()
+        self.get_flairs()
 
     def login(self):
         """Log in via script/web app."""
@@ -44,20 +44,20 @@ class FlairBot:
 
         if self.conf.get('app', 'auth_type') == 'webapp':
             token = self.conf.get('auth-webapp', 'token')
-            self.reddit = praw.Reddit(client_id=app_id,
-                                      client_secret=app_secret,
-                                      refresh_token=token,
-                                      user_agent=user_agent)
+            r = praw.Reddit(client_id=app_id,
+                            client_secret=app_secret,
+                            refresh_token=token,
+                            user_agent=user_agent)
         else:
             username = self.conf.get('auth-script', 'username')
             password = self.conf.get('auth-script', 'passwd')
-            self.reddit = praw.Reddit(client_id=app_id,
-                                      client_secret=app_secret,
-                                      username=username,
-                                      password=password,
-                                      user_agent=user_agent)
+            r = praw.Reddit(client_id=app_id,
+                            client_secret=app_secret,
+                            username=username,
+                            password=password,
+                            user_agent=user_agent)
 
-        self.get_flairs()
+        return r
 
     def get_flairs(self):
         """Read flairs from CSV."""
