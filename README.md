@@ -1,10 +1,10 @@
 # reddit-flair-bot
 
-Python script for handling PMs with a view to assigning user flair (image or image/text) based on their content. The main use case for this is for subreddits who want to allow their users to choose from more than 350 flairs (this is the current limit for flair templates in subreddits).
+Python script for 'old' reddit for handling PMs with a view to assigning user flair (image or image/text) based on their content. The main use case for this is for subreddits who want to allow their users to choose from more than 350 flairs (this is the current limit for flair templates in subreddits).
 
 # Requirements
 
-Requires [Python](https://www.python.org/downloads/) (2.7, and 3.3-3.6 supported) and [PRAW](https://github.com/praw-dev/praw) to work.
+Requires [Python](https://www.python.org/downloads/) (2.7, and 3.3-3.8 supported) and [PRAW](https://github.com/praw-dev/praw) to work.
 
 It also requires you to [set up](https://github.com/reddit/reddit/wiki/OAuth2) either a script or web app so you can authorise the bot to read PMs, mark PMs as read, and apply flair to users. Whichever you choose, the credentials will need to be entered into the [conf.ini](https://github.com/gavin19/reddit-flair-bot/blob/master/conf.ini) file.
 
