@@ -20,7 +20,6 @@ class FlairBot:
 
         self.conf = ConfigParser()
         self.flairs = {}
-        self.reddit = self.login()
 
         os.chdir(sys.path[0])
         if os.path.exists('conf.ini'):
@@ -33,6 +32,7 @@ class FlairBot:
         else:
             self.logging = True
 
+        self.reddit = self.login()
         self.get_flairs()
 
     def login(self):
